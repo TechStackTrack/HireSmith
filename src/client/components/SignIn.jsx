@@ -29,6 +29,14 @@ export function SignIn() {
     console.log(
       `Username is ${userInput.username}, password is ${userInput.password}`
     );
+
+    fetch('/route/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userInput)
+    })
   }
 
   return (

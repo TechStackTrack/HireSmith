@@ -64,22 +64,13 @@ function Row(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Companies
+                Prompt
               </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Company</TableCell>
-                    <TableCell>Interview Round</TableCell>
-                  </TableRow>
-                </TableHead>
+              <Table size="small" aria-label="prompt">
                 <TableBody>
-                  {row.companies.map((companiesRow) => (
-                    <TableRow key={companiesRow.companyName}>
-                      <TableCell component="th" scope="row">{companiesRow.companyName}</TableCell>
-                      <TableCell>{companiesRow.interviewRound}</TableCell>
+                    <TableRow>
+                      <TableCell component="th" scope="row">{row.prompt}</TableCell>
                     </TableRow>
-                  ))}
                 </TableBody>
               </Table>
             </Box>
