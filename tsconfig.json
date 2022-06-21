@@ -2,7 +2,7 @@
     "compilerOptions": {
       "outDir": "./dist/",
       "sourceMap": true,
-      "noImplicitAny": true,
+      "noImplicitAny": false,
       "module": "commonjs",
       "target": "es5",
       "jsx": "react",
@@ -13,6 +13,6 @@
     },
     "include": [
       "./src/**/*.ts",
-      "./src/**/*.tsx",
+      "./src/**/*.tsx", "src/client/components/Form.jsx", "src/client/components/Question.jsx", "src/client/App.jsx", "src/client/components/SignIn.jsx",
     ]
   }
