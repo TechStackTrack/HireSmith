@@ -3,13 +3,13 @@ import Button from '@mui/material/Button';
 
 const App = () => {
 
-  fetch('/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-    .then(data => console.log(data))
+  // fetch('/', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   }
+  // })
+  //   .then(data => console.log(data))
 
   return (
     <>
