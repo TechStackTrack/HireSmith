@@ -1,21 +1,20 @@
 import React, { Fragment } from 'react';
 import Button from '@mui/material/Button';
-import SignIn from './components/SignIn';
-import { Box } from '@mui/system';
+
+import { Form } from './components/Form';
+
 
 const App = () => {
   return (
-    <>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <SignIn />
-      </Box>
-    </>
-  );
-};
+
+    <div>
+      <Button variant="contained">Goodbye world</Button>
+      <br></br>
+      <br></br>
+      <Form/>
+    </div>
+  )
+}
+
 
 export default App;
