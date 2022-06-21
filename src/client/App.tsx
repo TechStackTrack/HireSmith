@@ -1,21 +1,21 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import Button from '@mui/material/Button';
+import SignIn from './components/SignIn';
+import { Box } from '@mui/system';
 
 const App = () => {
-
-  fetch('/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-    .then(data => console.log(data))
-
   return (
     <>
-      <Button variant="contained">Goodbye world</Button>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <SignIn />
+      </Box>
     </>
-  )
-}
+  );
+};
 
 export default App;
