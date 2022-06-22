@@ -15,12 +15,26 @@ export const MoreInfo = () => {
   }, [])
 
   useEffect(() => {
-    console.log('Data from database', cache);
+    const moreInfo = { ...cache[0], company: [] };
+    cache.map(sets => {
+      moreInfo.company.push(sets.company);
+    })
+    
+    const moreInfoTable = [];
+    for (let i = 0; i < Object.keys(moreInfo).length; i++) {
+      moreInfoTable.push(<tr key={i}><td>{Object.keys(moreInfo)[i]}</td><td>{moreInfo[Object.keys(moreInfo)[i]]}</td></tr>)
+  }
+    
+    console.log('cache', cache);
+    console.log('moreInfo', moreInfo);
   }, [cache])
 
+
+ 
   return (
     <Fragment>
       <h1>{questionid}</h1>
+      {moreInfoTable.length > 0 ? moreInfoTable : null}
     </Fragment>
 
   )
