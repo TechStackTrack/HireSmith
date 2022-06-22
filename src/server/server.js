@@ -14,13 +14,9 @@ app.use(express.json());
 
 app.use('/router', appRouter);
 
-app.get('/', (req, res,) => {
-  
-})
-
-app.post('/', (req, res) => {
-  return res.status(200).json('Hello from server')
-});
+// app.post('/', (req, res) => {
+//   return res.status(200).json('Hello from server')
+// });
 
 //unknown route
 app.use('*', (req, res) => {

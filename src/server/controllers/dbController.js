@@ -19,7 +19,7 @@ dbController.getQuestions = (req, res, next) => {
 }
  
 dbController.findQuestion = (req, res, next) => {
-  console.log('got inside findQuestion');
+  console.log('req.body in findQuestion: ', req.body);
   const { title } = req.body;
   const titleArr = [title];
   const existCheck = `SELECT * FROM questions WHERE title=$1`;
@@ -28,10 +28,10 @@ dbController.findQuestion = (req, res, next) => {
   db.query(existCheck, titleArr)
   .then((data) => {
     if (data.rows.length > 0) {
-      console.log('data.rows.length > 0');
+      console.log('data.rows in findQuestion: ', data.rows);
       res.locals.questionInDB = true;
-      res.locals.questionID = data.rows._id
-      console.log('res.locals is: ', res.locals);
+      res.locals.questionID = data.rows[0]._id
+      console.log('data.rows._id in findQuestion: ', data.rows[0]._id);
     }
     else {
       res.locals.questionInDB = false;
@@ -47,7 +47,6 @@ dbController.findQuestion = (req, res, next) => {
 
 //adding a question for the first time a title appears
 dbController.addQuestion = (req, res, next) => {
-  console.log('questionInDB is: ', res.locals.questionInDB);
   if (!res.locals.questionInDB) {
     const { title, difficulty, type, prompt, comment, company } = req.body;
     const qArr = [title, difficulty, type, prompt, comment]
@@ -56,7 +55,7 @@ dbController.addQuestion = (req, res, next) => {
     // insert into 'question' table if this particular question doesn't exist
     db.query(query, qArr)
       .then((data) => {
-        res.locals.questionID = data.rows._id;
+        res.locals.questionID = data.rows[0]._id;
         return next();
       })
       .catch(error => {
@@ -79,7 +78,8 @@ dbController.findCompany = (req, res, next) => {
   .then((data) => {
     if (data.rows.length > 0) {
       res.locals.companyInDB = true;
-      res.locals.companyID = data.rows._id
+      res.locals.companyID = data.rows[0]._id
+      console.log('in findCompany, data.rows._id: ', data.rows[0]._id);
     }
     else {
       res.locals.companyInDB = false;
@@ -101,7 +101,7 @@ dbController.addCompany = (req, res, next) => {
     // insert into 'question' table if this particular question doesn't exist
     db.query(query, companyArr)
       .then((data) => {
-        res.locals.companyID = data.rows._id;
+        res.locals.companyID = data.rows[0]._id;
         return next();
       })
       .catch(error => {
@@ -124,7 +124,7 @@ dbController.findRound = (req, res, next) => {
   .then((data) => {
     if (data.rows.length > 0) {
       res.locals.roundInDB = true;
-      res.locals.roundID = data.rows._id
+      res.locals.roundID = data.rows[0]._id
     }
     else {
       res.locals.roundInDB = false;
@@ -146,7 +146,7 @@ dbController.addRound = (req, res, next) => {
     // insert into 'rounds' table if this particular round doesn't exist
     db.query(query, roundArr)
       .then((data) => {
-        res.locals.roundID = data.rows._id;
+        res.locals.roundID = data.rows[0]._id;
         return next();
       })
       .catch(error => {
@@ -161,15 +161,19 @@ dbController.addRound = (req, res, next) => {
 }
 
 dbController.addToJoin = (req, res, next) => {
-  if (res.locals.questionInDB && res.locals.companyInDB && res.locals.roundInDB) return next();
+  console.log('inside addToJoin');
+  // WE NEED TO CHECK IF WE'RE ABOUT TO ADD AN ENTRY THAT ALREADY EXISTS IN JOIN_TABLE AND IF SO DON'T EXECUTE LOGIC BELOW
+  // THE LINE BELOW DOES NOT WORK FOR THIS PURPOSE B/C ALL 3 CAN BE TRUE BUT IT STILL MIGHT NOT BE A DUPLICATE
+  // if (res.locals.questionInDB && res.locals.companyInDB && res.locals.roundInDB) return next();
   
   const { questionID, companyID, roundID } = res.locals;
   const qArr = [questionID, companyID, roundID];
+  console.log('qArr in addToJoin: ', qArr);
   const query = `INSERT INTO join_table (question_id, company_id, round_id) VALUES ($1, $2, $3) RETURNING *`;
 
   db.query(query, qArr)
     .then((data) => {
-      res.locals.joinTableID = data.rows._id;
+      res.locals.joinTableID = data.rows[0]._id;
       return next();
     })
     .catch(error => {
