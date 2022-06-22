@@ -11,7 +11,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /.js$/,
+        test: /.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -54,7 +54,7 @@ module.exports = {
 
     //front end proxy. lets back end listen to whichever port youre on
     proxy: {
-      '/api/**': {
+      '/router/**': {
         target: 'http://localhost:3000/',
         secure: false,
       },
