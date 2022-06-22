@@ -5,22 +5,22 @@ import { SignIn } from './components/SignIn';
 import { Landing } from './components/Landing';
 import { Form } from './components/Form';
 import { MoreInfo } from './components/MoreInfo';
+import Navbar from './components/NavBar';
 
 const App = () => {
   return (
     <div>
-      <Button variant="contained">Goodbye world</Button>
+      <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignIn/>} />
-          <Route path="/landing" element={<Landing/>} />
-          <Route path="/form" element={<Form/>} />
-          <Route path="/:questionid" element={<MoreInfo/>} />
+          <Route path="/" element={<SignIn />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/form" element={<Form />} />
+          <Route path="/:questionid" element={<MoreInfo />} />
         </Routes>
-        </BrowserRouter>
+      </BrowserRouter>
     </div>
-  )
-}
-
+  );
+};
 
 export default App;

@@ -12,26 +12,26 @@ export function Form() {
   // company: object = {companyName, location}
   const [company, setCompany] = useState({
     companyName: '',
-    location: ''
+    location: '',
   });
 
-/****************************************************************
- *                    COMPANY COMPONENT'S STATE                 *
- ***************************************************************/
-  
+  /****************************************************************
+   *                    COMPANY COMPONENT'S STATE                 *
+   ***************************************************************/
+
   function handleCompanyChange(e) {
-    setCompany(prevCompany => {
+    setCompany((prevCompany) => {
       return {
         ...prevCompany,
-        [e.target.name] : e.target.value
-      }
-    })
+        [e.target.name]: e.target.value,
+      };
+    });
   }
 
-/****************************************************************
- *                   QUESTION COMPONENT'S STATE                 *
- ***************************************************************/
-  
+  /****************************************************************
+   *                   QUESTION COMPONENT'S STATE                 *
+   ***************************************************************/
+
   // question: object = {type, difficulty, round, comment, prompt}
   const [question, setQuestion] = useState({
     question: '',
@@ -39,25 +39,25 @@ export function Form() {
     difficulty: '',
     round: '',
     comment: '',
-    prompt: ''
+    prompt: '',
   });
 
   function handleQuestionChange(e) {
-    setQuestion(prevQuestion => {
+    setQuestion((prevQuestion) => {
       return {
         ...prevQuestion,
-        [e.target.name] : e.target.value
-      }
-    })
+        [e.target.name]: e.target.value,
+      };
+    });
   }
 
-/****************************************************************
- *                   BUTTONS - API                              *
- ***************************************************************/
+  /****************************************************************
+   *                   BUTTONS - API                              *
+   ***************************************************************/
   function companyResetButton() {
     setCompany({
       companyName: '',
-      location: ''
+      location: '',
     });
     setQuestion({
       question: '',
@@ -65,23 +65,37 @@ export function Form() {
       difficulty: '',
       round: '',
       comment: '',
-      prompt: ''
+      prompt: '',
     });
   }
   function questionSaveButton() {
     fetch('/router/questions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(company)
-    })
+      body: JSON.stringify(company),
+    });
   }
 
   return (
     <Fragment>
-      <TextField id="company-name" label="Company Name" variant="outlined" name='companyName' onChange={handleCompanyChange} value={company.companyName} />
-      <TextField id="company-location" label="Location" variant="outlined" onChange={handleCompanyChange} name='location' value={company.location}/>
+      <TextField
+        id="company-name"
+        label="Company Name"
+        variant="outlined"
+        name="companyName"
+        onChange={handleCompanyChange}
+        value={company.companyName}
+      />
+      <TextField
+        id="company-location"
+        label="Location"
+        variant="outlined"
+        onChange={handleCompanyChange}
+        name="location"
+        value={company.location}
+      />
       <br></br>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-helper-label">Type</InputLabel>
@@ -90,7 +104,7 @@ export function Form() {
           id="demo-simple-select-helper"
           value={question.type}
           label="Type"
-          onChange={handleChange}
+          onChange={handleQuestionChange}
         >
           <MenuItem value="">
             <em>None</em>
@@ -107,7 +121,7 @@ export function Form() {
           id="demo-simple-select-helper"
           value={question.type}
           label="Type"
-          onChange={handleChange}
+          onChange={handleQuestionChange}
         >
           <MenuItem value="">
             <em>None</em>
@@ -117,11 +131,19 @@ export function Form() {
           <MenuItem value={'Hard'}>Hard</MenuItem>
         </Select>
       </FormControl>
-          <TextField id="outlined-basic" label="Round" variant="outlined" />
-          <TextField id="outlined-basic" label="Comment" variant="outlined" />
-        <TextareaAutosize style={{ width: 200, height: 200 }} label="Prompt" variant="outlined" />
-      <Button onClick={() => companyResetButton()} variant="contained">Reset</Button>
-      <Button onClick={() => questionSaveButton()} variant="contained">Save</Button>
+      <TextField id="outlined-basic" label="Round" variant="outlined" />
+      <TextField id="outlined-basic" label="Comment" variant="outlined" />
+      <TextareaAutosize
+        style={{ width: 200, height: 200 }}
+        label="Prompt"
+        variant="outlined"
+      />
+      <Button onClick={() => companyResetButton()} variant="contained">
+        Reset
+      </Button>
+      <Button onClick={() => questionSaveButton()} variant="contained">
+        Save
+      </Button>
     </Fragment>
   );
 }
