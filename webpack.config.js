@@ -54,7 +54,7 @@ module.exports = {
 
     //front end proxy. lets back end listen to whichever port youre on
     proxy: {
-      '/api/**': {
+      '/router/**': {
         target: 'http://localhost:3000/',
         secure: false,
       },

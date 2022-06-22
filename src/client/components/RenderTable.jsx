@@ -13,7 +13,11 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+// import MoreInfo from './components/MoreInfo'
+
 
 export function CollapsibleTable({data}) {
   return (
@@ -30,12 +34,16 @@ export function CollapsibleTable({data}) {
         </TableHead>
         <TableBody>
           {data.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.title} row={row} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
+}
+
+const handleMoreInfo = (e) => {
+  console.log(e.target.name)
 }
 
 function Row(props) {
@@ -54,10 +62,13 @@ function Row(props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">{row.question}</TableCell>
+        <TableCell component="th" scope="row">{row.title}</TableCell>
         <TableCell align="right">{row.type}</TableCell>
         <TableCell align="right">{row.difficulty}</TableCell>
-        <TableCell align="right"><Button variant="contained">More Info</Button></TableCell>
+        <TableCell align="right">
+          <Link to={`/${row._id}`}>
+          <IconButton id={row._id} onClick={()=>{console.log(row._id)}}><ArrowForwardIcon /></IconButton></Link>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

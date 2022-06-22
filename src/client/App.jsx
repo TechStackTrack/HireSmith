@@ -8,7 +8,6 @@ import { MoreInfo } from './components/MoreInfo';
 
 const App = () => {
   return (
-
     <div>
       <Button variant="contained">Goodbye world</Button>
       <BrowserRouter>

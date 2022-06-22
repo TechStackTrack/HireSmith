@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,6 +6,8 @@ import FormHelperText from '@mui/material/FormHelperText';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { CollapsibleTable } from './RenderTable';
+import Button from '@mui/material/Button';
+
 
 const cached = {
   difficulty: ['easy', 'medium', 'hard'],
@@ -16,6 +18,11 @@ export function Landing() {
   const [search, setSearch] = useState('');
   const [optionList, setOptionList] = useState([]);
   const [specificSearch, setSpecificSearch] = useState('');
+  const [parsedData, setParsedData] = useState([]);
+
+  const handleSubmit = e => {
+    console.log(search, specificSearch)
+  }
 
   const handleChange = (event) => {
     setSearch(event.target.value);
@@ -23,33 +30,22 @@ export function Landing() {
   };
 
   const handleSpecificChange = e => {
-    console.log('specific is ', e.target.value)
     setSpecificSearch(e.target.value)
   }
 
-  // function landingQuery() {
-  //   fetch('/router/questions')
-  //     .then(res => {
-  //       const parsed = res.json();
-  //       return parsed;
-  //     })
-  // }
-
-  function createData(question, type, difficulty, prompt) {
-  return {
-    question,
-    type,
-    difficulty,
-    prompt
-  };
+  function landingQuery() {
+    fetch('/router/questions')
+      .then(res => res.json())
+      .then(data => setParsedData(data))
   }
-  
-  const parsed = [
-    createData('bst-height', 'algorithms', 'easy', 'Given a binary tree, find its height.'),
-    createData('bst-breadth-first', 'algorithms', 'medium', 'Given a binary tree, find its breadth-first traversal.'),
-    createData('bin-to-dec', 'algorithms', 'easy', 'Given a binary number, convert it to decimal.'),
-    createData('event-emitter', 'algorithms', 'hard', 'Create an event-emitter.'),
-];
+
+  useEffect(() => {
+    landingQuery();
+  }, [])
+
+  useEffect(() => {
+    console.log('Data from database', parsedData);
+  }, [parsedData])
 
   return (
     <div>
@@ -83,8 +79,11 @@ export function Landing() {
           return <MenuItem value={ele}>{ele}</MenuItem>
           })}
         </Select>
+      </FormControl>
+      <FormControl sx={{ m: 3, minWidth: 200 }}>
+      <Button variant="contained" onSubmit={handleSubmit}>Search</Button>
         </FormControl>
-        <CollapsibleTable data={parsed}/>
+        <CollapsibleTable data={parsedData}/>
     </div>
   );
 }
