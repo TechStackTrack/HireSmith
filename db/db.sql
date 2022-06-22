@@ -1,32 +1,46 @@
-CREATE TABLE "interview_questions" (
-  "_id" SERIAL PRIMARY KEY,
-  "questions" VARCHAR,
+-- DROP TABLE interview_questions CASCADE
+
+CREATE TABLE "questions" (
+  "_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "title" VARCHAR UNIQUE,
+  "difficulty" VARCHAR,
   "type" VARCHAR,
-  "level" VARCHAR,
-  "content" VARCHAR
-);
+  "prompt" VARCHAR, 
+  "comment" VARCHAR
+)
 
-CREATE TABLE "user_table" (
-  "_id" SERIAL PRIMARY KEY,
-  "username" VARCHAR,
-  "password" VARCHAR,
-  "email" VARCHAR
-);
+CREATE TABLE "companies" (
+  "_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "company" VARCHAR UNIQUE
+)
 
-CREATE TABLE "question_info" (
-  "_id" SERIAL PRIMARY KEY, 
-  "company_name" VARCHAR,
-  "round" VARCHAR,
-  "comments" VARCHAR,
-  "follow_up" BOOLEAN
-);
+CREATE TABLE "rounds" (
+  "_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  "round" VARCHAR UNIQUE
+)
 
--- call this join_table?
 CREATE TABLE "join_table" (
-  "_id" SERIAL PRIMARY KEY,
-  "question_id" integer REFERENCES "interview_questions" ("_id"),
-  "question_info_id" integer REFERENCES "question_info" ("_id")
-);
+   "_id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+   "question_id" INT REFERENCES "questions" ("_id"),
+   "company_id" INT REFERENCES "companies" ("_id"),
+   "round_id" INT REFERENCES "rounds" ("_id")
+)
+
+-- CREATE TABLE  public.species_in_films (
+-- 	"_id" serial NOT NULL,
+-- 	"film_id" bigint NOT NULL,
+-- 	"species_id" bigint NOT NULL,
+-- 	CONSTRAINT "species_in_films_pk" PRIMARY KEY ("_id")
+-- ) WITH (
+--   OIDS=FALSE
+-- );
+
+
+
+-- Run this command in terminal from db directory to execute this file
+-- psql -d postgres://ecouqssf:Db_QrtLbmSklXI6FzhLMED4XC6eqJe5U@heffalump.db.elephantsql.com/ecouqssf -f db.sql
+
+
 
 
 
